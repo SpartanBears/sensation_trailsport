@@ -6,10 +6,7 @@
 		$email = db_quote($_POST['email']);
 		$fono = db_quote($_POST['fono']);
 		$nombre = db_quote($_POST['nombre']);
-		$comprobante = $_POST['comprobante'];
-
-		echo gettype($comprobante);
-		exit;
+		$comprobante = $_FILES['comprobante'];
 
 		$connection = db_connect();
 
@@ -63,9 +60,14 @@
 	    return $result;
 	}
 
+	function genCode($seed){
+
+		
+	}
+
 	function renameFile($file, $name){
 
-
+		
 	}
 
 ?>

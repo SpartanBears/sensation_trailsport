@@ -19,29 +19,27 @@ function participarBtnEvt(e){
 
 function enviarBtnEvt(e){
 
-	/*$.ajax({
+	var formData = new FormData();
+
+	formData.append('rut', $('#rut').val());
+	formData.append('email', $('#email').val());
+	formData.append('fono', $('#fono').val());
+	formData.append('nombre', $('#nombre').val());
+	formData.append('comprobante', $('#comprobanteInput').prop('files')[0]);
+
+	$.ajax({
 		method: 'POST',
-		url: "spartanbears.cl/WIP/services/raffle.php",
-		data:{
-			rut:,
-			email:,
-			fono:,
-			nombre:
-		},
+		url: "http://127.0.0.1/sensation_trailsport/services/raffle.php"/*"spartanbears.cl/WIP/services/raffle.php"*/,
+		data: formData,
 		crossDomain: true,
+		cache: false,
+        contentType: false,
+        processData: false,
 		success: function(data){
 
-			if(!data.includes('token invalido')){
-
-				//TODO
-
-			}else{
-
-				sessionStorage.clear();
-				location.href = "../index.html";
-			}
+			console.log(data);
 		}
-	});*/
+	});
 
 	$('#modalEnviado').modal("open");
 }
