@@ -61,6 +61,7 @@ function enviarBtnEvt(e){
 			});
 
 			$('#enviarBtnSpinner').fadeOut(500, function(){
+				$('#enviarBtn').removeClass('disabled');
 				$('#enviarBtn').fadeIn(500, function(){
 
 					//TODO
