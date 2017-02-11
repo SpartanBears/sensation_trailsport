@@ -10,6 +10,12 @@ $(document).ready(function(){
 		}
 	});
 
+	$('#nombre,#fono,#emailComprobar,#email,#rut,input[type=file]').each(function(){
+
+		// this.addEventListener('blur', onBlurEvt, false);
+		this.addEventListener('change', onBlurEvt, false);
+	});
+
 });
 
 function participarBtnEvt(e){
@@ -71,19 +77,19 @@ function toggleFormulario(){
 
 function validarFields(){
 
-	var fieldsId = '#nombre,#fono,#emailComprobar,#email,#rut';
+	var fieldsId = '#nombre,#fono,#emailComprobar,#email,#rut,input[type=file]';
 	var textFields = '#nombre,#fono,input[type=file]';
 	var flagtext = true, flagMail = true, flagRut = true;
 
-	$(fieldsId).each(function(){
+	// $(fieldsId).each(function(){
 
-		if(this.value.length>0){
+	// 	if(this.value.length>0){
 
-			toggleErrorForm(this, true);
-		}else{
-			toggleErrorForm(this, false);
-		}
-	});
+	// 		toggleErrorForm(this, true);
+	// 	}else{
+	// 		toggleErrorForm(this, false);
+	// 	}
+	// });
 
 	$(textFields).each(function(){
 
@@ -99,6 +105,8 @@ function validarFields(){
 
 	if($('#email').val().length > 0 && $('#emailComprobar').val().length > 0 && $('#email').val() == $('#emailComprobar').val()){
 
+		toggleErrorForm($('#email')[0], true);
+		toggleErrorForm($('#emailComprobar')[0], true);
 		flagMail = true;
 	}else if($('#email').val() != $('#emailComprobar').val()){
 
@@ -115,6 +123,14 @@ function validarFields(){
 	}else{
 
 		toggleErrorForm($('#fono')[0], false);
+	}
+
+	if(flagtext * flagMail * flagRut * onlyNumbers($('#fono').val()) == 1){
+
+		$('#enviarBtn').removeClass('disabled');
+	}else{
+
+		$('#enviarBtn').addClass('disabled');
 	}
 
 	return flagtext * flagMail * flagRut * onlyNumbers($('#fono').val());
@@ -176,7 +192,6 @@ function onlyNumbers(string){
 	return reg.test(string);
 }
 
-
 function toggleErrorForm(element, flag){
 
 	var flagBool = (typeof flag != 'undefined') ? flag: false;
@@ -192,5 +207,5 @@ function toggleErrorForm(element, flag){
 
 function onBlurEvt(e){
 
-
+	validarFields();
 }
