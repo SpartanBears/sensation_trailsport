@@ -106,7 +106,7 @@ function validarFields(){
 		}
 	});
 
-	if($('#email').val().length > 0 && $('#emailComprobar').val().length > 0 && $('#email').val() == $('#emailComprobar').val()){
+	if(validarMail($('#email')[0]) && validarMail($('#emailComprobar')[0]) && $('#email').val() == $('#emailComprobar').val()){
 
 		toggleErrorForm($('#email')[0], true);
 		toggleErrorForm($('#emailComprobar')[0], true);
@@ -144,7 +144,35 @@ function validarFields(){
 		$('#enviarBtn').addClass('disabled');
 	}
 
-	return flagtext * flagMail * flagRut * onlyNumbers($('#fono').val());
+	return flagtext * flagMail * flagRut * onlyNumbers($('#fono').val()) * validarMail($('#email')[0]);
+}
+
+function validarMail(inputMail){
+
+	var email = inputMail.value;
+
+	var flag = false;
+
+	if(email.match(/@/g) != null){
+		if(email.match(/@/g).length == 1){
+			if(email.match(/\./g) != null){
+				flag = true;
+			}else{
+				flag = false;
+			}
+		}else{
+			flag = false;
+		}
+	}else{
+		flag = false;
+	}
+
+	if(flag){
+		jQuery(inputMail).css("box-shadow", "none");
+	}else{
+		jQuery(inputMail).css("box-shadow", "inset 0px 0px 10px 1px rgba(255,0,0,0.63)");
+	}
+	return flag;
 }
 
 function validaRut(elemento){
