@@ -45,14 +45,23 @@ function enviarBtnEvt(e){
         processData: false,
 		success: function(data){
 
-			console.log(data);
+			var response = JSON.parse(data);
+
+			if(response.code == 0){
+
+				$('#modalEnviadoCodigo').html(response.resp);
+
+				$('#nombre,#fono,#emailComprobar,#email,#rut,input[type=file]').each(function(){
+
+					$(this).val('');
+				});
+
+			}else{
+
+				$('#modalEnviadoCodigo').html('<<Inténtelo nuevamente>>');
+			}
 
 			$('#modalEnviado').modal("open");
-
-			$('#nombre,#fono,#emailComprobar,#email,#rut,input[type=file]').each(function(){
-
-				$(this).val('');
-			});
 
 			toggleEnviarSpinner();
 		}

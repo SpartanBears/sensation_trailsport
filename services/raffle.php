@@ -14,20 +14,40 @@
 
 		if(!$connection){
 
-			echo '{code: 2, msg: "error conexion bd"}';
+			$resp['code'] = 2;
+			$resp['resp'] = "error conexion bd";
+			
+			echo json_encode($resp);
 
 		}else{
 
 			$code = genCode($rut);
 			$filename = renameFile($comprobante, $code);
 
-			$result = db_query("INSERT into 'raffle' ('rut', 'email', 'nombre', 'fono', 'comprobante', 'codigo') VALUES ($rut, $email, $fono, $nombre, $filename, $codigo)");
+			$result = db_query("INSERT into raffle (rut, email, nombre, fono, comprobante, codigo) VALUES ($rut, $email, $fono, $nombre, '$filename', '$code')");
+
+			if($result){
+
+				$resp['code'] = 0;
+				$resp['resp'] = $code;
+				
+				echo json_encode($resp);
+
+			}else{
+
+				$resp['code'] = 3;
+				$resp['resp'] = "error query";
+				
+				echo json_encode($resp);
+			}
 		}
 
 	}else{
 
-		echo '{code: 1, msg: "campos incompletos"}';
-		exit;
+		$resp['code'] = 1;
+		$resp['resp'] = "campos incompletos";
+		
+		echo json_encode($resp);
 	}
 
 	function db_connect(){
@@ -42,10 +62,6 @@
 
 	    if($connection === false) {
 
-	    	$config = parse_ini_file('../config.ini');
-	    	echo($config['server'].$config['username'].$config['password'].$config['dbname'].$config['port']);
-	    	die;
-
 	        return mysqli_connect_error(); 
 	    }
 
@@ -58,7 +74,7 @@
 	}
 
 	function db_query($query) {
-	    
+
 	    $connection = db_connect();
 
 	    $result = mysqli_query($connection,$query);
@@ -75,11 +91,13 @@
 
 	function renameFile($file, $name){
 
-		$tmpFile = $file['tmp_file'];
-		$extension = end(explode(".",$tmpFile));
-		$newName = "../comprobantes/".$name.".".$extension;
+		$tmpFile = $file['tmp_name'];
+		$extension = end(explode(".",$file['name']));
 
-		rename($tmpFile, $newName);
+		$newDir = "../comprobantes/";
+		$newName = $name.".".$extension;
+
+		rename($tmpFile, $newDir.$newName);
 
 		return $newName;
 	}
