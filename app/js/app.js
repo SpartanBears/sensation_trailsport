@@ -98,9 +98,9 @@ function toggleEnviarSpinner(){
 
 	}else{
 
-		$('#enviarBtnSpinner').fadeOut(500, function(){
+		$('#enviarBtn').removeClass('disabled');
 
-			$('#enviarBtn').removeClass('disabled');
+		$('#enviarBtnSpinner').fadeOut(500, function(){
 
 			$('#enviarBtn').fadeIn(500, function(){
 
