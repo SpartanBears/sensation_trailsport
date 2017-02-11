@@ -54,7 +54,6 @@ function enviarBtnEvt(e){
 				$(this).val('');
 			});
 
-<<<<<<< HEAD
 			$('#enviarBtnSpinner').fadeOut(500, function(){
 				$('#enviarBtn').removeClass('disabled');
 				$('#enviarBtn').fadeIn(500, function(){
@@ -62,9 +61,7 @@ function enviarBtnEvt(e){
 					//TODO
 				});
 			});
-=======
 			toggleEnviarSpinner();
->>>>>>> origin/master
 		}
 	});
 }
