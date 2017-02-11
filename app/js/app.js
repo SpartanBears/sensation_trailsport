@@ -37,7 +37,7 @@ function enviarBtnEvt(e){
 
 	$.ajax({
 		method: 'POST',
-		url: "http://spartanbears.cl/WIP/sensation_trailsport/services/raffle.php",
+		url: "https://spartanbears.cl/WIP/sensation_trailsport/services/raffle.php",
 		data: formData,
 		crossDomain: true,
 		cache: false,
