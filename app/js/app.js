@@ -33,17 +33,11 @@ function enviarBtnEvt(e){
 	formData.append('nombre', $('#nombre').val());
 	formData.append('comprobante', $('#comprobanteInput').prop('files')[0]);
 
-	$('#enviarBtn').fadeOut(500, function(){
-
-		$('#enviarBtnSpinner').fadeIn(500, function(){
-
-			//TODO
-		});
-	});
+	toggleEnviarSpinner();
 
 	$.ajax({
 		method: 'POST',
-		url: "http://127.0.0.1/sensation_trailsport/services/raffle.php"/*"spartanbears.cl/WIP/services/raffle.php"*/,
+		url: "http://spartanbears.cl/WIP/sensation_trailsport/services/raffle.php",
 		data: formData,
 		crossDomain: true,
 		cache: false,
@@ -60,12 +54,7 @@ function enviarBtnEvt(e){
 				$(this).val('');
 			});
 
-			$('#enviarBtnSpinner').fadeOut(500, function(){
-				$('#enviarBtn').fadeIn(500, function(){
-
-					//TODO
-				});
-			});
+			toggleEnviarSpinner();
 		}
 	});
 }
@@ -87,6 +76,31 @@ function toggleFormulario(){
 		$('.formularioReal').fadeOut(500, function(){
 
 			$('.inscripcionButton').fadeIn(500, function(){
+
+				//TODO
+			});
+		});
+
+	}
+}
+
+function toggleEnviarSpinner(){
+
+	if($('#enviarBtn').is(":visible")){
+
+		$('#enviarBtn').fadeOut(500, function(){
+
+			$('#enviarBtnSpinner').fadeIn(500, function(){
+
+				//TODO
+			});
+		});
+
+	}else{
+
+		$('#enviarBtnSpinner').fadeOut(500, function(){
+
+			$('#enviarBtn').fadeIn(500, function(){
 
 				//TODO
 			});

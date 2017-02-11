@@ -19,7 +19,7 @@
 			$code = genCode($rut);
 			$filename = renameFile($comprobante, $code);
 
-			db_query("INSERT into 'raffle' ('rut', 'email', 'nombre', 'fono', 'comprobante', 'codigo') VALUES ($rut, $email, $fono, $nombre, $filename, $codigo)");
+			$result = db_query("INSERT into 'raffle' ('rut', 'email', 'nombre', 'fono', 'comprobante', 'codigo') VALUES ($rut, $email, $fono, $nombre, $filename, $codigo)");
 		}
 
 	}else{
@@ -62,12 +62,20 @@
 
 	function genCode($seed){
 
-		
+		$ts = microtime();
+
+		return md5($seed.$ts);
 	}
 
 	function renameFile($file, $name){
 
-		
+		$tmpFile = $file['tmp_file'];
+		$extension = end(explode(".",$tmpFile));
+		$newName = "../comprobantes/".$name.".".$extension;
+
+		rename($tmpFile, $newName);
+
+		return $newName;
 	}
 
 ?>
