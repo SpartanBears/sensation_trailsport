@@ -33,6 +33,14 @@ function enviarBtnEvt(e){
 	formData.append('nombre', $('#nombre').val());
 	formData.append('comprobante', $('#comprobanteInput').prop('files')[0]);
 
+	$('#enviarBtn').fadeOut(500, function(){
+
+		$('#enviarBtnSpinner').fadeIn(500, function(){
+
+			//TODO
+		});
+	});
+
 	$.ajax({
 		method: 'POST',
 		url: "http://127.0.0.1/sensation_trailsport/services/raffle.php"/*"spartanbears.cl/WIP/services/raffle.php"*/,
@@ -50,6 +58,13 @@ function enviarBtnEvt(e){
 			$('#nombre,#fono,#emailComprobar,#email,#rut,input[type=file]').each(function(){
 
 				$(this).val('');
+			});
+
+			$('#enviarBtnSpinner').fadeOut(500, function(){
+				$('#enviarBtn').fadeIn(500, function(){
+
+					//TODO
+				});
 			});
 		}
 	});
