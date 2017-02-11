@@ -44,14 +44,14 @@ function enviarBtnEvt(e){
 		success: function(data){
 
 			console.log(data);
+
+			$('#modalEnviado').modal("open");
+
+			$('#nombre,#fono,#emailComprobar,#email,#rut,input[type=file]').each(function(){
+
+				$(this).val('');
+			});
 		}
-	});
-
-	$('#modalEnviado').modal("open");
-
-	$('#nombre,#fono,#emailComprobar,#email,#rut,input[type=file]').each(function(){
-
-		$(this).val('');
 	});
 }
 
