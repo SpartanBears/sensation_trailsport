@@ -1,0 +1,90 @@
+body{
+	margin: 0;
+}
+
+.mainContainer{
+	width: 100%;
+	height: 100%;
+}
+
+.containerLeft{
+	width: 20%;
+	height: 100%;
+	float: left;
+	background-image: url(../images/bgSensationLeft.jpg);
+	background-size: cover;
+}
+
+.containerCenter{
+	width: 60%;
+	height: 100%;
+	display: inline-block;
+}
+
+.containerRight{
+	width: 20%;
+	height: 100%;
+	float: right;
+	background-image: url(../images/bgSensationRight.jpg);
+	background-size: cover;
+}
+
+.logoContainer{
+	margin: 2% 0 2% 0;
+	width: 100%;
+	height: 25%;
+}
+
+.formularioContainer{
+	position: relative;
+	margin: 2% 0 2% 0;
+	padding: 2%;
+	width: 100%;
+	height: 60%;
+}
+
+.logo{
+	width: 33%;
+	height: auto;
+	min-height: 200px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.trailsportLogo{
+	float: left;
+	background-image: url(../images/trailsportLogo.png);
+}
+
+.sensationLogo{
+	display: inline-block;
+	background-image: url(../images/sensationLogo.png);
+}
+
+.andesFutureLogo{
+	float: right;
+	background-image: url(../images/andesfutureLogo.png);
+}
+
+.formularioReal{
+	margin-top: 10%;
+}
+
+.inscripcionButton{
+	text-align: center;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.textoDescripcion{
+	text-align: center;
+	font-family: "roboto";
+}
+
+.footer{
+	width: 100%;
+	height: 8%; 
+}
