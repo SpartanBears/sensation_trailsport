@@ -36,12 +36,16 @@
 	    
 	    if(!isset($connection)) {
 	         
-	        $config = parse_ini_file('../config.ini'); 
-	        $connection = mysqli_connect('localhost',$config['username'],$config['password'],$config['dbname']);
+	        $config = parse_ini_file('../config.ini');
+	        $connection = mysqli_connect($config['server'],$config['username'],$config['password'],$config['dbname'], $config['port']);
 	    }
 
 	    if($connection === false) {
-	      
+
+	    	$config = parse_ini_file('../config.ini');
+	    	var_dump($config);
+	    	die;
+
 	        return mysqli_connect_error(); 
 	    }
 

@@ -54,13 +54,6 @@ function enviarBtnEvt(e){
 				$(this).val('');
 			});
 
-			$('#enviarBtnSpinner').fadeOut(500, function(){
-				$('#enviarBtn').removeClass('disabled');
-				$('#enviarBtn').fadeIn(500, function(){
-
-					//TODO
-				});
-			});
 			toggleEnviarSpinner();
 		}
 	});
@@ -106,6 +99,8 @@ function toggleEnviarSpinner(){
 	}else{
 
 		$('#enviarBtnSpinner').fadeOut(500, function(){
+
+			$('#enviarBtn').removeClass('disabled');
 
 			$('#enviarBtn').fadeIn(500, function(){
 
