@@ -48,6 +48,11 @@ function enviarBtnEvt(e){
 	});
 
 	$('#modalEnviado').modal("open");
+
+	$('#nombre,#fono,#emailComprobar,#email,#rut,input[type=file]').each(function(){
+
+		$(this).val('');
+	});
 }
 
 function toggleFormulario(){
@@ -79,7 +84,7 @@ function validarFields(){
 
 	var fieldsId = '#nombre,#fono,#emailComprobar,#email,#rut,input[type=file]';
 	var textFields = '#nombre,#fono,input[type=file]';
-	var flagtext = true, flagMail = true, flagRut = true;
+	var flagtext = true, flagMail = false, flagRut = false;
 
 	// $(fieldsId).each(function(){
 
@@ -95,11 +100,9 @@ function validarFields(){
 
 		if(this.value.length>0 && flagtext){
 
-			toggleErrorForm(this, true);
 		}else{
 
 			flagtext = false;
-			toggleErrorForm(this, false);
 		}
 	});
 
@@ -115,14 +118,22 @@ function validarFields(){
 		flagMail = false;
 	}
 
-	flagRut = validaRut($('#rut')[0]);
+	if($('#rut').val().length>1){
+		flagRut = validaRut($('#rut')[0]);
+		toggleErrorForm($('#rut')[0], flagRut);
+	}
 
-	if(onlyNumbers($('#fono').val())){
+	if($('#fono').val().length > 1){
+		if(onlyNumbers($('#fono').val())){
+			toggleErrorForm($('#fono')[0], true);
+		}else{
 
-		toggleErrorForm($('#fono')[0], true);
+			toggleErrorForm($('#fono')[0], false);
+		}
+		
 	}else{
 
-		toggleErrorForm($('#fono')[0], false);
+		// 
 	}
 
 	if(flagtext * flagMail * flagRut * onlyNumbers($('#fono').val()) == 1){
