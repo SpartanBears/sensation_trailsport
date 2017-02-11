@@ -13,12 +13,14 @@ body{
 	float: left;
 	background-image: url(../images/bgSensationLeft.jpg);
 	background-size: cover;
+	position: fixed;
 }
 
 .containerCenter{
 	width: 60%;
 	height: 100%;
 	display: inline-block;
+	margin: 0 20%;
 }
 
 .containerRight{
@@ -27,6 +29,10 @@ body{
 	float: right;
 	background-image: url(../images/bgSensationRight.jpg);
 	background-size: cover;
+
+	position: fixed;
+	left: 80%;
+	top: 0;
 }
 
 .logoContainer{
