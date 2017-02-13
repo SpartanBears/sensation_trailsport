@@ -24,7 +24,7 @@
 			$code = genCode($rut);
 			$filename = renameFile($comprobante, $code);
 
-			$result = db_query("INSERT into raffle (rut, email, nombre, fono, comprobante, codigo) VALUES ($rut, $email, $fono, $nombre, '$filename', '$code')");
+			$result = db_query("INSERT into raffle (rut, email, nombre, fono, comprobante, codigo) VALUES ($rut, $email, $nombre, $fono, '$filename', '$code')");
 
 			if($result){
 

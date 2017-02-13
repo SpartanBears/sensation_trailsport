@@ -313,11 +313,11 @@ function getWinners(winnerQty, ignoreQty, playerPool, rngPool){
 
 		if(ignoreQty <= index){
 
-			console.log("Winner - Ticket: " + rngPool[index] + " RUT: " + playerPool[rngPool[index]].rut + "Nombre: " + playerPool[rngPool[index]].nombre);
+			console.log("Winner - Ticket: " + rngPool[index] + " RUT: " + playerPool[rngPool[index]].rut + " Nombre: " + playerPool[rngPool[index]].nombre);
 
 		}else{
 
-			console.log("Ignored - Ticket: " + rngPool[index] + " RUT: " + playerPool[rngPool[index]].rut + "Nombre: " + playerPool[rngPool[index]].nombre);
+			console.log("Ignored - Ticket: " + rngPool[index] + " RUT: " + playerPool[rngPool[index]].rut + " Nombre: " + playerPool[rngPool[index]].nombre);
 		}
 	}
 }
