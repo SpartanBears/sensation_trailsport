@@ -4,7 +4,7 @@
 	
 	if(isset($_POST['rut']) && isset($_POST['email'])){
 
-		$rut = cleanString(db_quote($_POST['rut']));
+		$rut = cleanRut(db_quote($_POST['rut']));
 		$email = db_quote($_POST['email']);
 		$fono = db_quote($_POST['fono']);
 		$nombre = db_quote($_POST['nombre']);
