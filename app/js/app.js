@@ -37,7 +37,7 @@ function enviarBtnEvt(e){
 
 	$.ajax({
 		method: 'POST',
-		url: "https://spartanbears.cl/WIP/sensation_trailsport/services/raffle.php",
+		url: "https://spartanbears.cl/WIP/sensation_trailsport/services/register.php",
 		data: formData,
 		crossDomain: true,
 		cache: false,
@@ -287,4 +287,68 @@ function toggleErrorForm(element, flag){
 function onBlurEvt(e){
 
 	validarFields();
+}
+
+function login(password){
+
+	sessionStorage.pw = password;
+}
+
+function prepareRaffle(){
+
+	getParticipants();
+}
+
+function runRaffle(winnerQty, ignoreQty){
+
+	var pool = JSON.parse(sessionStorage.pt);
+	var max = pool.length-1;
+
+	getRandomNumbers(10, 0, max, winnerQty, ignoreQty, pool);
+}
+
+function getWinners(winnerQty, ignoreQty, playerPool, rngPool){
+
+	for(var index = 0; index < (winnerQty + ignoreQty); index++){
+
+		if(ignoreQty <= index){
+
+			console.log("Winner " + rngPool[index] + playerPool[rngPool[index]].rut);
+
+		}else{
+
+			console.log("Ignored " + rngPool[index] + playerPool[rngPool[index]].rut);
+		}
+	}
+}
+
+function getRandomNumbers(qty, min, max, winnerQty, ignoreQty, playerPool){
+
+	$.ajax({
+		method: 'GET',
+		url: "https://www.random.org/integers/?num="+qty+"&min="+min+"&max="+max+"&col=1&base=10&format=plain&rnd=new",
+		customData:{
+
+			winnerQty:winnerQty,
+			ignoreQty:ignoreQty,
+			playerPool:playerPool
+		},
+		success: function(data){
+
+			getWinners(this.customData.winnerQty, this.customData.ignoreQty, this.customData.playerPool, data.split("\n"));
+		}
+	});
+}
+
+function getParticipants(){
+
+	$.ajax({
+		method: 'POST',
+		data:{p:sessionStorage.pw},
+		url: "https://spartanbears.cl/WIP/sensation_trailsport/services/raffle.php",
+		success: function(data){
+
+			sessionStorage.pt = data;
+		}
+	});
 }

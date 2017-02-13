@@ -1,14 +1,17 @@
 <?php
 
 	header("Access-Control-Allow-Origin: *");
-	
-	if(isset($_POST['rut']) && isset($_POST['email'])){
 
-		$rut = db_quote($_POST['rut']);
-		$email = db_quote($_POST['email']);
-		$fono = db_quote($_POST['fono']);
-		$nombre = db_quote($_POST['nombre']);
-		$comprobante = $_FILES['comprobante'];
+	$enabled = true;
+
+	if($_POST['p'] != 'trailsport2017' && $enabled){
+
+		$resp['code'] = 4;
+		$resp['resp'] = "error password";
+		
+		echo json_encode($resp);
+
+	}else{
 
 		$connection = db_connect();
 
@@ -21,17 +24,16 @@
 
 		}else{
 
-			$code = genCode($rut);
-			$filename = renameFile($comprobante, $code);
-
-			$result = db_query("INSERT into raffle (rut, email, nombre, fono, comprobante, codigo) VALUES ($rut, $email, $fono, $nombre, '$filename', '$code')");
+			$result = db_query("SELECT * FROM raffle WHERE confirmado = 1");
 
 			if($result){
 
-				$resp['code'] = 0;
-				$resp['resp'] = $code;
+				while($row = $result->fetch_array(MYSQL_ASSOC)) {
+
+			    	$temp[] = $row;
+				}
 				
-				echo json_encode($resp);
+				echo json_encode($temp);
 
 			}else{
 
@@ -41,13 +43,6 @@
 				echo json_encode($resp);
 			}
 		}
-
-	}else{
-
-		$resp['code'] = 1;
-		$resp['resp'] = "campos incompletos";
-		
-		echo json_encode($resp);
 	}
 
 	function db_connect(){
@@ -68,11 +63,6 @@
 	    return $connection;
 	}
 
-	function db_quote($value) {
-	    $connection = db_connect();
-	    return "'" . mysqli_real_escape_string($connection,$value) . "'";
-	}
-
 	function db_query($query) {
 
 	    $connection = db_connect();
@@ -82,24 +72,9 @@
 	    return $result;
 	}
 
-	function genCode($seed){
-
-		$ts = microtime();
-
-		return md5($seed.$ts);
-	}
-
-	function renameFile($file, $name){
-
-		$tmpFile = $file['tmp_name'];
-		$extension = end(explode(".",$file['name']));
-
-		$newDir = "../comprobantes/";
-		$newName = $name.".".$extension;
-
-		rename($tmpFile, $newDir.$newName);
-
-		return $newName;
+	function formatRut($rut) {
+		
+		return substr($rut, 0, (strlen($rut) > 8?2:1)).".".substr($rut, -7, -4).".".substr($rut, -4, -1)."-".substr($rut, -1);
 	}
 
 ?>
