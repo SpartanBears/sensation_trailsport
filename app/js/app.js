@@ -37,7 +37,7 @@ function enviarBtnEvt(e){
 
 	$.ajax({
 		method: 'POST',
-		url: "https://spartanbears.cl/WIP/sensation_trailsport/services/register.php",
+		url: "http://sensation.trailsport.cl/services/register.php",
 		data: formData,
 		crossDomain: true,
 		cache: false,
@@ -345,7 +345,7 @@ function getParticipants(){
 	$.ajax({
 		method: 'POST',
 		data:{p:sessionStorage.pw},
-		url: "https://spartanbears.cl/WIP/sensation_trailsport/services/raffle.php",
+		url: "http://sensation.trailsport.cl/services/raffle.php",
 		success: function(data){
 
 			sessionStorage.pt = data;
