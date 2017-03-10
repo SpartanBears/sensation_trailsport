@@ -12,8 +12,10 @@ body{
 	height: 100%;
 	float: left;
 	background-image: url(../images/bgSensationLeft.jpg);
-	background-size: cover;
-	position: fixed;
+	background-size: contain;
+	position: absolute;
+	left: 0;
+	top: 0;
 }
 
 .containerCenter{
@@ -28,9 +30,9 @@ body{
 	height: 100%;
 	float: right;
 	background-image: url(../images/bgSensationRight.jpg);
-	background-size: cover;
-	position: fixed;
-	left: 80%;
+	background-size: contain;
+	position: absolute;
+	right: 0;
 	top: 0;
 }
 
@@ -97,4 +99,14 @@ body{
 .buttonColor{
 
 	background-color: #2D8FC9 !important;
+}
+
+img{
+
+	max-width: 100%
+}
+
+input, textarea{
+	
+	max-width:100%
 }
