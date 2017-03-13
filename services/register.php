@@ -134,7 +134,7 @@
 		
 		mail($mailto, $subject, $message_body, $cabeceras);
 		
-		$mailCopySubject = 'Código '.$idVoucher.' - '.$rut.' '.$nombre;
+		$mailCopySubject = 'Código '.$code.' - '.$rut.' '.$nombre;
 		$mailCopyBody = 'Código: '.$code.PHP_EOL.'RUT: '.$rut.' '.'Nombre: '.$nombre.' '.'Email: '.$email;
 		
 		wordwrap($mailCopyBody);
