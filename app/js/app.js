@@ -56,8 +56,6 @@ function enviarBtnEvt(e){
 
 				$('#modalEnviadoCodigo').html(response.resp);
 
-				codigoSendMail(response.resp, this.customData.formData);
-
 				$('#nombre,#fono,#emailComprobar,#email,#rut,input[type=file]').each(function(){
 
 					$(this).val('');
