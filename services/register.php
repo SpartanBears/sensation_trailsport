@@ -30,6 +30,8 @@
 
 				$resp['code'] = 0;
 				$resp['resp'] = $code;
+
+				sendMail($nombre, $rut, $code, $email);
 				
 				echo json_encode($resp);
 
@@ -110,6 +112,37 @@
 	function formatRut($rut) {
 		
 		return substr($rut, 0, (strlen($rut) > 8?2:1)).".".substr($rut, -7, -4).".".substr($rut, -4, -1)."-".substr($rut, -1);
+	}
+
+	function sendMail($nombre, $rut, $code, $email){
+	
+		$message_body = "";
+		$mailto= $email;
+		$subject = "Concurso Sensation - Trail Sport (Mensaje Automático - No Responder)";
+		$message_body = 'Hemos recibido los datos de participación satisfactoriamente. Nos pondremos en contacto contigo a la brevedad para confirmar el depósito de tu aporte y así validar tu código. ';
+		$message_body .= PHP_EOL.PHP_EOL.'Tu código de participación es el: '.$code.".".PHP_EOL.'Conserva este correo como respaldo.'.PHP_EOL.PHP_EOL;
+		$message_body .= PHP_EOL.'Sin otro particular, se despide atentamente'.PHP_EOL.PHP_EOL.'Equipo Trail Sport.';
+
+		$from = "concurso.sensation@trailsport.cl";
+
+		$cabeceras = "MIME-Version: 1.0" . "\r\n";
+		$cabeceras .= 'Reply-To: '. $from. "\r\n" .
+		$cabeceras .= "Content-type:text/plain;charset=UTF-8" . "\r\n";
+		$cabeceras .= 'From: <'.$from.'>' . "\r\n";
+
+		wordwrap($message_body);
+		
+		mail($mailto, $subject, $message_body, $cabeceras);
+		
+		$mailCopySubject = 'Código '.$idVoucher.' - '.$rut.' '.$nombre;
+		$mailCopyBody = 'Código: '.$code.PHP_EOL.'RUT: '.$rut.' '.'Nombre: '.$nombre.' '.'Email: '.$email;
+		
+		wordwrap($mailCopyBody);
+		
+		$to = "concurso.sensation@trailsport.cl";
+		
+		mail($to,$mailCopySubject,$mailCopyBody,$cabeceras);
+		 
 	}
 
 ?>

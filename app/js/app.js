@@ -33,12 +33,17 @@ function enviarBtnEvt(e){
 	formData.append('nombre', $('#nombre').val());
 	formData.append('comprobante', $('#comprobanteInput').prop('files')[0]);
 
+	var formDataBkp = {rut: $('#rut').val(), email: $('#email').val(), fono: $('#fono').val(), nombre: $('#nombre').val(), comprobante: $('#comprobanteInput').prop('files')[0]};
+
 	toggleEnviarSpinner();
 
 	$.ajax({
 		method: 'POST',
 		url: "http://trailsport.cl/sensation/services/register.php",
 		data: formData,
+		customData: {
+			formData: formDataBkp,
+		},
 		crossDomain: true,
 		cache: false,
         contentType: false,
@@ -51,7 +56,7 @@ function enviarBtnEvt(e){
 
 				$('#modalEnviadoCodigo').html(response.resp);
 
-				codigoSendMail(responde.resp, this.data);
+				codigoSendMail(response.resp, this.customData.formData);
 
 				$('#nombre,#fono,#emailComprobar,#email,#rut,input[type=file]').each(function(){
 
@@ -68,11 +73,6 @@ function enviarBtnEvt(e){
 			toggleEnviarSpinner();
 		}
 	});
-}
-
-function codigoSendMail(codigo, info){
-
-	console.log(codigo, info);
 }
 
 function toggleFormulario(){
