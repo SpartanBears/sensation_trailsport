@@ -51,6 +51,8 @@ function enviarBtnEvt(e){
 
 				$('#modalEnviadoCodigo').html(response.resp);
 
+				codigoSendMail(responde.resp, this.data);
+
 				$('#nombre,#fono,#emailComprobar,#email,#rut,input[type=file]').each(function(){
 
 					$(this).val('');
@@ -66,6 +68,11 @@ function enviarBtnEvt(e){
 			toggleEnviarSpinner();
 		}
 	});
+}
+
+function codigoSendMail(codigo, info){
+
+	console.log(codigo, info);
 }
 
 function toggleFormulario(){
