@@ -1,20 +1,40 @@
 $(document).ready(function(){
 
-	document.getElementById('partiparBtn').addEventListener('click', participarBtnEvt, false);
-	document.getElementById('enviarBtn').addEventListener('click', enviarBtnEvt, false);
-	
-	$('#modalEnviado').modal({
-		complete: function(){
+	var currentLocation = location.pathname.split('/');
+	currentLocation = currentLocation[currentLocation.length-1];
 
-			toggleFormulario();
-		}
-	});
+	switch(currentLocation){
 
-	$('#nombre,#fono,#emailComprobar,#email,#rut,input[type=file]').each(function(){
+		case 'confirmar.html':
 
-		// this.addEventListener('blur', onBlurEvt, false);
-		this.addEventListener('change', onBlurEvt, false);
-	});
+			document.querySelector('#loginBtn').addEventListener('click', login, false);
+
+			document.querySelector('#c_filter_select').addEventListener('change', filterConfirmado, false);
+
+			$('#c_filter').material_select();
+
+		break;
+
+		default:
+
+			document.getElementById('partiparBtn').addEventListener('click', participarBtnEvt, false);
+			document.getElementById('enviarBtn').addEventListener('click', enviarBtnEvt, false);
+			
+			$('#modalEnviado').modal({
+				complete: function(){
+
+					toggleFormulario();
+				}
+			});
+
+			$('#nombre,#fono,#emailComprobar,#email,#rut,input[type=file]').each(function(){
+
+				// this.addEventListener('blur', onBlurEvt, false);
+				this.addEventListener('change', onBlurEvt, false);
+			});
+
+		break;
+	}
 
 });
 
@@ -357,3 +377,213 @@ function getParticipants(){
 		}
 	});
 }
+
+//--- confirmar.html ---
+
+function buildParticipantsTable(){
+
+	document.querySelector('.c_body').innerHTML = "";
+
+	var participants = JSON.parse(sessionStorage.aP);
+
+	var table = document.createElement('table');
+
+	var tHeader = document.createElement('thead');
+
+	var tHeader_tr = document.createElement('tr');
+
+	var tHeader_tr_td_nombre = document.createElement('td');
+	tHeader_tr_td_nombre.innerHTML = "Nombre";
+
+	var tHeader_tr_td_rut = document.createElement('td');
+	tHeader_tr_td_rut.innerHTML = "RUT";
+
+	var tHeader_tr_td_email = document.createElement('td');
+	tHeader_tr_td_email.innerHTML = "Email";
+
+	var tHeader_tr_td_codigo = document.createElement('td');
+	tHeader_tr_td_codigo.innerHTML = "Código";
+
+	var tHeader_tr_td_confirmado = document.createElement('td');
+	tHeader_tr_td_confirmado.innerHTML = "Confirmado";
+
+	tHeader_tr.appendChild(tHeader_tr_td_nombre);
+	tHeader_tr.appendChild(tHeader_tr_td_rut);
+	tHeader_tr.appendChild(tHeader_tr_td_email);
+	tHeader_tr.appendChild(tHeader_tr_td_codigo);
+	tHeader_tr.appendChild(tHeader_tr_td_confirmado);
+
+	tHeader.appendChild(tHeader_tr);
+
+	table.appendChild(tHeader);
+
+	var tBody = document.createElement('tbody'); 
+
+	for(var index = 0; index < participants.length; index++){
+
+		var pTr = document.createElement('tr');
+		pTr.className = "participante_tr"; 
+
+		var pTd_nombre = document.createElement('td');
+		pTd_nombre.innerHTML = participants[index].nombre;
+
+		var pTd_rut = document.createElement('td');
+		pTd_rut.innerHTML = participants[index].rut;
+
+		var pTd_email = document.createElement('td');
+		pTd_email.innerHTML = participants[index].email;
+
+		var pTd_codigo = document.createElement('td');
+		pTd_codigo.innerHTML = participants[index].codigo;
+		pTd_codigo.className = "codigo";
+
+		var pTd_confirmado = document.createElement('td');
+
+		var pTd_confirmado_cb = document.createElement('input');
+		pTd_confirmado_cb.id = "cb_"+index;
+		pTd_confirmado_cb.type = "checkbox";
+		pTd_confirmado_cb.value = participants[index].confirmado;
+		pTd_confirmado_cb.className = "filled-in";
+		pTd_confirmado_cb.checked = participants[index].confirmado == 0 ? false : true;
+		pTd_confirmado_cb.addEventListener('click', cbConfirmEvt, false);
+
+		var pTd_confirmado_cb_label = document.createElement('label');
+		pTd_confirmado_cb_label.setAttribute("for","cb_"+index);
+		pTd_confirmado_cb_label.innerHTML = " ";
+
+		pTr.dataset.confirmado = participants[index].confirmado;
+
+		pTd_confirmado.appendChild(pTd_confirmado_cb);
+		pTd_confirmado.appendChild(pTd_confirmado_cb_label);
+
+		pTr.appendChild(pTd_nombre);
+		pTr.appendChild(pTd_rut);
+		pTr.appendChild(pTd_email);
+		pTr.appendChild(pTd_codigo);
+		pTr.appendChild(pTd_confirmado);
+
+		tBody.appendChild(pTr);
+	}
+
+	table.appendChild(tBody);
+
+	document.querySelector('.c_body').appendChild(table);
+}
+
+function filterConfirmado(e){
+
+	var selectedValue = this.value;
+
+	$('.participante_tr').hide();
+
+	switch(selectedValue){
+
+		case 0:
+
+			$('.participante_tr').find('input[type="checkbox"]').each(function(){
+
+				if($(this).val() == 0){
+
+					$(this).closest('.participante_tr').show();
+				}
+			});
+
+		break;
+
+		case 1:
+
+			$('.participante_tr').find('input[type="checkbox"]').each(function(){
+
+				if($(this).val() == 1){
+
+					$(this).closest('.participante_tr').show();
+				}
+			});
+
+		break;
+
+		case 2:
+
+			$('.participante_tr').show();
+
+		break;
+	}
+}
+
+function cbConfirmEvt(e){
+
+	var code = $(this).parent().parent().find(".codigo").text()
+
+	confirmCode(code, this);
+}
+
+function getAllParticipants(){
+
+	$.ajax({
+		method: 'POST',
+		data:{
+			p: sessionStorage.pw, 
+			opt: "users",
+		},
+		url: "http://trailsport.cl/sensation/services/confirm.php",
+		success: function(data){
+
+			sessionStorage.aP = data;
+
+			buildParticipantsTable();
+		}
+	});
+}
+
+function confirmCode(code, element){
+
+	var status = element.checked ? 1:0;
+
+	$.ajax({
+		method: 'POST',
+		data:{
+			p: sessionStorage.pw, 
+			opt: "confirm",
+			code: code,
+			status: status,
+		},
+		customData:{
+
+			el: element,
+		},
+		url: "http://trailsport.cl/sensation/services/confirm.php",
+		success: function(data){
+
+		},
+		error: function(){
+
+			this.customData.el.checked = this.customData.el.checked == true ? false:true;
+		}
+	});
+}
+
+function login(){
+
+	var pw = $('#password').val();
+
+	$.ajax({
+		method: 'POST',
+		data:{
+			p: pw, 
+			opt: "login",
+		},
+		customData:{p: pw},
+		url: "http://trailsport.cl/sensation/services/confirm.php",
+		success: function(data){
+
+			if(data == 1){
+
+				sessionStorage.pw = this.customData.p;
+
+				getAllParticipants();
+			}
+		}
+	});
+}
+
+

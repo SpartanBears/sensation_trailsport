@@ -2,7 +2,7 @@
 
 	header("Access-Control-Allow-Origin: *");
 
-	$enabled = true;
+	$enabled = false;
 
 	if($_POST['p'] != 'trailsport2017' && $enabled){
 
