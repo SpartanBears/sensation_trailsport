@@ -17,8 +17,9 @@ $(document).ready(function(){
 
 		default:
 
-			document.getElementById('partiparBtn').addEventListener('click', participarBtnEvt, false);
-			document.getElementById('enviarBtn').addEventListener('click', enviarBtnEvt, false);
+			document.querySelector('#partiparBtn').addEventListener('click', participarBtnEvt, false);
+			document.querySelector('#enviarBtn').addEventListener('click', enviarBtnEvt, false);
+			document.querySelector('#datosBtn').addEventListener('click', datosBtnEvt), false;
 			
 			$('#modalEnviado').modal({
 				complete: function(){
@@ -26,6 +27,8 @@ $(document).ready(function(){
 					toggleFormulario();
 				}
 			});
+
+			$('#modalDatos').modal();
 
 			$('#nombre,#fono,#emailComprobar,#email,#rut,input[type=file]').each(function(){
 
@@ -41,6 +44,11 @@ $(document).ready(function(){
 function participarBtnEvt(e){
 
 	toggleFormulario();
+}
+
+function datosBtnEvt(e){
+
+	$('#modalDatos').modal("open");
 }
 
 function enviarBtnEvt(e){
